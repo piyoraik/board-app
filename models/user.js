@@ -14,10 +14,31 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    name: DataTypes.STRING,
-    pass: DataTypes.STRING,
-    mail: DataTypes.STRING,
-    age: DataTypes.INTEGER
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true
+      }
+    },
+    pass: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true
+      }
+    },
+    mail: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: true
+      }
+    },
+    age: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: true,
+        min: 0
+      }
+    }
   }, {
     sequelize,
     modelName: 'User',
