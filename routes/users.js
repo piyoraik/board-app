@@ -2,6 +2,16 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models/index');
 
+router.get('/', (req, res, next) => {
+  db.User.findAll().then(users => {
+    var data = {
+      title: 'Users/Index',
+      content: users
+    }
+    res.render('users/index', data);
+  });
+});
+
 
 router.get('/add', (req, res, next) => {
   var data = {
@@ -19,7 +29,7 @@ router.post('/add', (req, res, next) => {
       age: req.body.age
     }))
     .then(user => {
-      res.redirect('users');
+      res.redirect('/users');
     });
 
 });
