@@ -29,17 +29,23 @@
         <th>Name</th>
         <th>Mail</th>
         <th>Age</th>
+        <th>編集・削除</th>
       </thead>
       <% for(var i in content) { %>
       <tr>
         <% obj = content[i] %>
         <td><%= obj.id %> </td>
-        <td><%= obj.name %> </td>
+        <td><%= obj.name %></td>
         <td><%= obj.mail %> </td>
         <td><%= obj.age %> </td>
+        <td>
+          <a href="/users/edit?id=<%= obj.id %> ">編集</a>|
+          <a href="/users/delete?id=<%= obj.id %> ">削除</a>
+        </td>
       </tr>
       <% } %>
     </table>
+    <button onclick="location.href='/users/add'" class="btn btn-info">登録</button>
   </div>
 </body>
 
