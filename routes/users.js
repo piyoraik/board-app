@@ -59,9 +59,30 @@ router.post('/edit', (req, res, next) => {
     .catch((error) => {
       console.log(error);
     })
-    .then(user => {
+    .then(() => {
       res.redirect('/users')
     });
+});
+
+router.get('/delete', (req, res, next) => {
+  db.User.findByPk(req.query.id)
+    .then(user => {
+      var data = {
+        title: 'Users/Delete',
+        form: user
+      }
+      res.render('users/delete', data);
+    })
+});
+
+router.post('/delete', (req, res, next) => {
+  db.sequelize.sync()
+    .then(() => db.User.destroy({
+      where: { id: req.body.id }
+    }))
+    .then(() => {
+      res.redirect('/users');
+    })
 });
 
 module.exports = router;
