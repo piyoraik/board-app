@@ -2,7 +2,6 @@
 const {
   Model
 } = require('sequelize');
-const user = require('./user');
 module.exports = (sequelize, DataTypes) => {
   class Board extends Model {
     /**
@@ -16,16 +15,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Board.init({
-    userId: DataTypes.INTEGER,
-    validate: {
-      notEmpty: {
-        msg: "利用者は必須です"
+    userId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          msg: "利用者は必須です"
+        }
       }
     },
-    message: DataTypes.STRING,
-    validate: {
-      notEmpty: {
-        msg: "メッセージは必須です"
+    message: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "メッセージは必須です"
+        }
       }
     }
   }, {

@@ -2,6 +2,38 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models/index');
 
+router.get('/login', (req, res, next) => {
+  var data = {
+    title: 'Users/Login',
+    content: '名前とパスワードを入力してください'
+  }
+  res.render('users/login', data)
+});
+
+router.post('/login', (req, res, next) => {
+  db.User.findOne({
+    where: {
+      mail: req.body.mail,
+      pass: req.body.pass
+    }
+  }).then(user => {
+    if (user != null) {
+      req.session.login = user;
+      let back = req.session.back;
+      if (back == null) {
+        back = '/';
+      }
+      res.redirect(back);
+    } else {
+      var data = {
+        title: "Users/Login",
+        content: '名前かパスワードに問題があります。再度入力してください'
+      }
+      res.render('users/login', data);
+    }
+  })
+});
+
 router.get('/', (req, res, next) => {
   db.User.findAll().then(users => {
     var data = {
